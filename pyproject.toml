@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools_scm[toml]>=7.0.5"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deep-pricing"
+version = "0.1.0"
+authors = [
+  { name="Eloi", email="eloi.wang@polytechnique.edu"}, {name="Mateus", email="mateus.siqueira-thimoteo@polytechnique.edu"},
+]
+maintainers = [
+  #  { name="Guillaume DESFORGES", email="guillaume.desforges@tweag.io" },
+]
+description = "A project for risk assessment and management in finance"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+      "matplotlib",
+      "numpy",
+      "scipy",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/GearlessJohn/deep-pricing"
+"Bug Tracker" = "https://github.com/GearlessJohn/deep-pricing/issues"
+
+[tool.setuptools_scm]
