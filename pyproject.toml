@@ -6,10 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "deep-pricing"
 version = "0.1.0"
 authors = [
-  { name="Eloi", email="eloi.wang@polytechnique.edu"}, {name="Mateus", email="mateus.siqueira-thimoteo@polytechnique.edu"},
+  { name="Eloi Wang", email="eloi.wang@polytechnique.edu"}, {name="Mateus Siqueira-Thimoteo", email="mateus.siqueira-thimoteo@polytechnique.edu"},
 ]
 maintainers = [
-  #  { name="Guillaume DESFORGES", email="guillaume.desforges@tweag.io" },
+   {name="Eduardo Abi Jaber", email="eduardo.abi.jaber@gmail.com" },
 ]
 description = "A project for risk assessment and management in finance"
 readme = "README.md"
