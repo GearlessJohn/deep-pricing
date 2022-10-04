@@ -120,15 +120,18 @@ def implied_volatility_call_bisection(C, S, K, T, r, tol=0.0001, max_iterations=
     return sigma
 
 
-def hallerbach_approximation(C, S, K, r, T):
-    
+def hallerbach_approximation(C, S, K, T, r):
+
     X = K * np.exp(-r * T)
-    sigma = (1 / np.sqrt(T) * np.sqrt(2 * np.pi) / 2 * (S + X)) * (
+    sigma = (1 / np.sqrt(T) * np.sqrt(2 * np.pi) / (2 * (S + X))) * (
         2 * C
         + X
         - S
-        + np.sqrt((2 * C + X - S) ** 2 - 2 * (S + X) * (X - S) ** 2 / (S * np.pi))
+        + np.sqrt(
+            (2 * C + X - S) ** 2
+            - 1.85 * (S + X) * (X - S) ** 2 / (np.pi * np.sqrt(X * S))
+        )
     )
     # print((2 * C + X - S) ** 2 - 2 * (S + X) * (X - S) ** 2 / (S * np.pi))
-    
+
     return sigma

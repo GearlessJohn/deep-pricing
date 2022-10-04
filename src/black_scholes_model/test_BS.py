@@ -5,7 +5,7 @@ from implied_vol_codearmo import (
     vega,
     implied_volatility_call_bisection,
     implied_volatility_call_newton,
-    hallerbach_approximation
+    hallerbach_approximation,
 )
 
 # Test to verify the functions
@@ -63,7 +63,7 @@ def test2(
         ],
         label="newton",
     )
-    
+
     ax.plot(
         X,
         [
@@ -80,22 +80,16 @@ def test2(
         ],
         label="bisection",
     )
-    
-    # ax.plot(
-    #     X,
-    #     [
-    #         hallerbach_approximation(
-    #             black_scholes_call(s, K, T, r, sigma),
-    #             s,
-    #             K,
-    #             T,
-    #             r
-    #         )
-    #         for s in X
-    #     ],
-    #     label="hallerbach",
-    # )
-        
+
+    ax.plot(
+        X,
+        [
+            hallerbach_approximation(black_scholes_call(s, K, T, r, sigma), s, K, T, r)
+            for s in X
+        ],
+        label="hallerbach",
+    )
+
     ax.axhline(sigma, color="r", label="theoretical sigma")
 
     ax.set_xlabel("S")
@@ -111,6 +105,9 @@ def test2(
 
 if __name__ == "__main__":
     # test1()
-    # test2()
-    C_test = black_scholes_call(S=100, K=100, T=1/12, r=0.05, sigma=0.3)
-    print(hallerbach_approximation(C=C_test, S=100, K=100, r=0.05, T=1/12))
+    test2(start=80, end=120)
+    # K=S=100
+    # r=0.05
+    # sigma = 0.3
+    # T = 1/12
+    # print(hallerbach_approximation(black_scholes_call()))
