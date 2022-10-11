@@ -1,4 +1,4 @@
-import numpy as np
+import os
 import matplotlib.pyplot as plt
 from implied_vol_codearmo import (
     black_scholes_call,
@@ -104,10 +104,8 @@ def test2(
 
 
 if __name__ == "__main__":
-    # test1()
+    if not os.path.exists("./fig/"):
+        os.mkdir("./fig/")
+
+    test1()
     test2(start=80, end=120)
-    # K=S=100
-    # r=0.05
-    # sigma = 0.3
-    # T = 1/12
-    # print(hallerbach_approximation(black_scholes_call()))

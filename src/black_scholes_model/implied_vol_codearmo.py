@@ -1,7 +1,6 @@
 # Imports
 import numpy as np
 from scipy.stats import norm
-import matplotlib.pyplot as plt
 
 # Gaussian distributions, as reference
 N_prime = norm.pdf
@@ -19,7 +18,7 @@ def black_scholes_call(S, K, T, r, sigma):
     :return: call price
     """
 
-    ###standard black-scholes formula
+    # standard black-scholes formula
     d1 = (np.log(S / K) + (r + sigma**2 / 2) * T) / (sigma * np.sqrt(T))
     d2 = d1 - sigma * np.sqrt(T)
 
@@ -38,7 +37,7 @@ def vega(S, K, T, r, sigma):
     :return: partial derivative w.r.t volatility
     """
 
-    ### calculating d1 from black scholes
+    # calculating d1 from black scholes
     d1 = (np.log(S / K) + (r + sigma**2 / 2) * T) / sigma * np.sqrt(T)
 
     # see hull derivatives chapter on greeks for reference
@@ -59,20 +58,20 @@ def implied_volatility_call_newton(C, S, K, T, r, tol=0.0001, max_iterations=100
     :return: implied volatility in percent
     """
 
-    ### assigning initial volatility estimate for input in Newton_rap procedure
+    # assigning initial volatility estimate for input in Newton_rap procedure
     sigma = 0.3
 
     for i in range(max_iterations):
 
-        ### calculate difference between blackscholes price and market price with
-        ### iteratively updated volality estimate
+        # calculate difference between blackscholes price and market price with
+        # iteratively updated volality estimate
         diff = black_scholes_call(S, K, T, r, sigma) - C
 
-        ###break if difference is less than specified tolerance level
+        # break if difference is less than specified tolerance level
         if abs(diff) < tol:
             break
 
-        ### use newton rapshon to update the estimate
+        # use newton rapshon to update the estimate
         sigma = sigma - diff / vega(S, K, T, r, sigma)
 
     return sigma
@@ -91,22 +90,22 @@ def implied_volatility_call_bisection(C, S, K, T, r, tol=0.0001, max_iterations=
     :return: implied volatility in percent
     """
 
-    ### assigning initial volatility estimate for input in Newton_rap procedure
+    # assigning initial volatility estimate for input in Newton_rap procedure
     a = 0
     b = 1
     sigma = 0.5
 
     for i in range(max_iterations):
 
-        ### calculate difference between blackscholes price and market price with
-        ### iteratively updated volality estimate
+        # calculate difference between blackscholes price and market price with
+        # iteratively updated volality estimate
         diff = black_scholes_call(S, K, T, r, sigma) - C
 
-        ###break if difference is less than specified tolerance level
+        # break if difference is less than specified tolerance level
         if abs(diff) < tol:
             break
 
-        ### use bisection method to update the estimate
+        # use bisection method to update the estimate
         if diff < 0:
             if black_scholes_call(S, K, T, r, b) < C:
                 a = b
