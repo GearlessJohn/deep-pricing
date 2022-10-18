@@ -19,18 +19,13 @@ def covariance(T, n, eta, lam):
     for i in range(n):
         for j in range(n):
             cov[i, j] = Sigma(times[i], times[j], eta=eta, lam=lam)
-
+    # don't use cycles
     return cov
 
 
-def XT(T, n, eta, lam):
+def XT(L, Zn):
 
-    cov = covariance(T, n, eta, lam)
-    L = np.linalg.cholesky(cov)
-
-    Zns = np.random.multivariate_normal(np.zeros(n), np.eye(n), 1)
-
-    Xns = np.append([0], L @ Zns.T)
+    Xns = np.append([0], L @ Zn.T)
 
     return Xns
 
@@ -39,7 +34,13 @@ def plot_XT(lam, eta, T=1.5, n=30, repeat=1000):
 
     times = np.linspace(0, T, n + 1)
 
-    sample = np.array([XT(lam=lam, eta=eta, T=T, n=n) for i in range(repeat)])
+    cov = covariance(T, n, eta, lam)
+    L = np.linalg.cholesky(cov)
+    Zn = np.random.multivariate_normal(
+        np.zeros(n), np.eye(n), 1
+    )  # une fois pour tout (invariant by eta and lam)
+
+    sample = np.array([XT(L=L, Zn=Zn) for i in range(repeat)])
 
     mean = np.mean(sample[:, -1])
     var = np.var(sample[:, -1])
@@ -64,4 +65,4 @@ if __name__ == "__main__":
     if not os.path.exists("./fig/"):
         os.mkdir("./fig/")
 
-    plot_XT(lam=1, eta=1, repeat=1000)
+    plot_XT(lam=1, eta=0.5, repeat=1000)
