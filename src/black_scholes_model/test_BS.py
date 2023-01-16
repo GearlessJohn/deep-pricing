@@ -1,3 +1,4 @@
+import numpy as np
 import os
 import matplotlib.pyplot as plt
 from implied_vol_codearmo import (
@@ -12,17 +13,17 @@ from implied_vol_codearmo import (
 # First test to verify the functions
 
 
-def test1(T=1, K=100, r=0.05, sigma=0.3, start=10, end=160):
+def test1(T=1, S=100, r=0.05, sigma=0.3, start=40, end=160):
 
-    X = range(start, end, 1)
+    X = np.arange(start, end, 1)
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
-    ax.plot(X, [black_scholes_call(s, K, T, r, sigma) for s in X], label="call price")
-    ax.plot(X, [vega(s, K, T, r, sigma) for s in X], label="vega")
+    ax.plot(X/S, [black_scholes_call(S, k, T, r, sigma) for k in X], label="call price")
+    ax.plot(X/S, [vega(S, k, T, r, sigma) for k in X], label="vega")
 
-    ax.set_xlabel("S")
+    ax.set_xlabel("K/S")
     ax.set_ylabel("C")
     ax.set_title(f"Call price and vega as function of Spot")
 
@@ -103,9 +104,31 @@ def test2(
     )
 
 
+
+def test3(T=1, S=100, K=100, r=0.05, start=0, end=100):
+
+    X = np.arange(start, end, 1) * 0.1
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+
+    ax.plot(X, [black_scholes_call(S, K, T, r, sigma) for sigma in X], label="call price")
+    # ax.plot(X/S, [vega(S, K, T, r, sigma) for sigma in X], label="vega")
+
+    ax.set_xlabel("sigma")
+    ax.set_ylabel("C")
+    ax.set_title(f"Call price as function of sigma")
+
+    plt.legend(loc="best")
+
+    plt.savefig("./fig/Call price as function of sigma.png")
+
+
+
 if __name__ == "__main__":
     if not os.path.exists("./fig/"):
         os.mkdir("./fig/")
 
     test1()
-    test2(start=80, end=120)
+    test2(start=50, end=150)
+    # test3()
