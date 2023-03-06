@@ -1,6 +1,6 @@
 # Ignore the rawdata and figures directory which is used to store large scale raw data
-data/
-fig/
+# data/
+# fig/
 
 # Ignore the PR direcroty which is used to store the pull request drafts
 PR/
